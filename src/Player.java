@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -8,19 +9,24 @@ public class Player extends Cards{
     private Card[] hand;
     public static byte numPlayers = 0;
 
-    public Player(String name) {
+    public Player(String name) throws IOException {
+        super();
+        System.out.println("deck size in player: "+ deck.size());
         numPlayers++;
         this.name = name;
-        if(numPlayers == 1){
-            System.out.println("ran 1");
-            playerDeck = pOneDeck;
-            if(playerDeck == null) System.out.println("fuck me");
+        playerDeck = new ArrayList<>();
+        if(numPlayers == 1) {
+            for(int i = 0; i < 26; i++){
+                playerDeck.add(deck.get(i));
+            }
         }
-        else if(numPlayers == 2) {
-            System.out.println("ran 2");
-            playerDeck = pTwoDeck;
+        else if(numPlayers == 2){
+            for(int i = 26; i < deck.size();i++){
+                playerDeck.add(deck.get(i));
+            }
         }
         hand = new Card[15];
+        grabHand();
     }
 
     public String getName() {
@@ -38,13 +44,12 @@ public class Player extends Cards{
         return hand;
     }
     public void grabHand(){
-        System.out.println(playerDeck);
         for(int i = 0; i < 15; i ++){
             hand[i] = playerDeck.get(i);
         }
         playerDeck.removeAll(List.of(hand));
     }
     public String toString(){
-        return getName()+"\n"+playerDeck.toString()+"\n"+ Arrays.toString(hand)+"\n";
+        return getName()+"\n"+playerDeck.toString()+"\n"+playerDeck.size()+"\n"+ Arrays.toString(hand)+"\n"+hand.length+"\n";
     }
 }

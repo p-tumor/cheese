@@ -19,9 +19,7 @@ public class Window extends JFrame implements ActionListener {
         start.setFont(new Font("Comic Sans MS",Font.PLAIN, 30));
         start.addActionListener(e -> {
             System.out.println("start button pressed");
-            removeAll();
-            revalidate();
-            repaint();
+
         });
         start.addMouseListener((new MouseAdapter() {
             @Override
