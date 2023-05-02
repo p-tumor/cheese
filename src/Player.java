@@ -11,17 +11,17 @@ public class Player extends Cards{
 
     public Player(String name) throws IOException {
         super();
-        System.out.println("deck size in player: "+ deck.size());
         numPlayers++;
+        System.out.println("numplayers: "+ numPlayers);
         this.name = name;
         playerDeck = new ArrayList<>();
         if(numPlayers == 1) {
-            for(int i = 0; i < 26; i++){
-                playerDeck.add(deck.get(i));
-            }
+            for(int i = 0; i < 26; i++) playerDeck.add(deck.get(i));
         }
         else if(numPlayers == 2){
-            for(int i = 26; i < deck.size();i++){
+            System.out.println("tried");
+            for(int i = 26; i < deck.size();i++) {
+                System.out.println("loop");
                 playerDeck.add(deck.get(i));
             }
         }

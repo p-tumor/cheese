@@ -6,12 +6,18 @@ import java.util.ArrayList;
 
 public class Cards {
     protected static ArrayList<Card> deck;
-    protected ArrayList<Cards> leftPile;
-    protected ArrayList<Cards> rightPile;
-    public Cards(){
+    protected static ArrayList<Cards> leftPile;
+    protected static ArrayList<Cards> rightPile;
+    private static byte count = 0;
+    public Cards() throws IOException {
         deck = new ArrayList<>();
         leftPile = new ArrayList<>();
         rightPile = new ArrayList<>();
+        count++;
+        if(count == 1){
+            genDeck();
+        }
+        System.out.println("did");
     }
     protected void shuffle(ArrayList<Card> deck){
         ArrayList<Card> temp = new ArrayList<>(deck);
@@ -31,7 +37,7 @@ public class Cards {
         for(Card c: deck) output.append(c.getSUIT()).append(c.getCARD_VAL());
         return output.toString();
     }
-    public void genDeck() throws IOException {
+    protected void genDeck() throws IOException {
         File[] listOfFiles = new File("src/card images").listFiles();
         for (File file : listOfFiles) {
             if (file.isFile()) {
@@ -47,6 +53,5 @@ public class Cards {
             }
         }
         shuffle(deck);
-        System.out.println("deck size: "+deck.size());
     }
 }
