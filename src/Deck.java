@@ -4,22 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Cards {
-    protected static ArrayList<Card> deck;
-    protected static ArrayList<Cards> leftPile;
-    protected static ArrayList<Cards> rightPile;
-    private static byte count = 0;
-    public Cards() throws IOException {
-        deck = new ArrayList<>();
-        leftPile = new ArrayList<>();
-        rightPile = new ArrayList<>();
-        count++;
-        if(count == 1){
-            genDeck();
-        }
-        System.out.println("did");
-    }
-    protected void shuffle(ArrayList<Card> deck){
+public class Deck {
+    public static ArrayList<Card> deck = new ArrayList<>();
+    public static void shuffle(ArrayList<Card> deck){
         ArrayList<Card> temp = new ArrayList<>(deck);
         deck.clear();
         for(int i = (int)(Math.random()*temp.size()); temp.size() != 0; i = (int)(Math.random()*temp.size())){
@@ -27,17 +14,7 @@ public class Cards {
             temp.remove(i);
         }
     }
-    public void toLeft(Player p, Card c){
-        Card[] temp = p.getHand();
-
-    }
-
-    protected String getDeck() {
-        StringBuilder output = new StringBuilder();
-        for(Card c: deck) output.append(c.getSUIT()).append(c.getCARD_VAL());
-        return output.toString();
-    }
-    protected void genDeck() throws IOException {
+    public static void genDeck() throws IOException {
         File[] listOfFiles = new File("src/card images").listFiles();
         for (File file : listOfFiles) {
             if (file.isFile()) {
@@ -53,5 +30,10 @@ public class Cards {
             }
         }
         shuffle(deck);
+    }
+    public String getDeck() {
+        StringBuilder output = new StringBuilder();
+        for(Card c: deck) output.append(c.getSUIT()).append(c.getCARD_VAL());
+        return output.toString();
     }
 }

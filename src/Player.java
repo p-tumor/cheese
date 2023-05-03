@@ -3,53 +3,53 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Player extends Cards{
+public class Player{
     private String name;
-    private ArrayList<Card> playerDeck;
-    private Card[] hand;
-    public static byte numPlayers = 0;
-
+    private ArrayList<Card> playerHand;
+    private Card[] cardsAtPlay;
+    public static ArrayList<Card> leftPile = new ArrayList<>();
+    public static ArrayList<Card> rightPile = new ArrayList<>();
+    private static byte numPlayers = 0;
     public Player(String name) throws IOException {
-        super();
         numPlayers++;
-        System.out.println("numplayers: "+ numPlayers);
         this.name = name;
-        playerDeck = new ArrayList<>();
+        playerHand = new ArrayList<>();
         if(numPlayers == 1) {
-            for(int i = 0; i < 26; i++) playerDeck.add(deck.get(i));
+            for(int i = 0; i < 26; i++) playerHand.add(Deck.deck.get(i));
         }
         else if(numPlayers == 2){
-            System.out.println("tried");
-            for(int i = 26; i < deck.size();i++) {
-                System.out.println("loop");
-                playerDeck.add(deck.get(i));
+            for(int i = 26; i < Deck.deck.size();i++) {
+                playerHand.add(Deck.deck.get(i));
             }
         }
-        hand = new Card[15];
-        grabHand();
+        cardsAtPlay = new Card[15];
+        grabcardsAtPlay();
     }
 
     public String getName() {
         return name;
     }
 
-    public ArrayList<Card> getPlayerDeck() {
-        return playerDeck;
+    public ArrayList<Card> getplayerHand() {
+        return playerHand;
     }
 
     public void addCard(Card card) {
-        playerDeck.add(card);
+        playerHand.add(card);
     }
-    public Card[] getHand(){
-        return hand;
+    public Card[] getCardsAtPlay(){
+        return cardsAtPlay;
     }
-    public void grabHand(){
+    public void grabcardsAtPlay(){
         for(int i = 0; i < 15; i ++){
-            hand[i] = playerDeck.get(i);
+            cardsAtPlay[i] = playerHand.get(i);
         }
-        playerDeck.removeAll(List.of(hand));
+        playerHand.removeAll(List.of(cardsAtPlay));
+    }
+    public void spit(){
+
     }
     public String toString(){
-        return getName()+"\n"+playerDeck.toString()+"\n"+playerDeck.size()+"\n"+ Arrays.toString(hand)+"\n"+hand.length+"\n";
+        return getName()+"\n"+playerHand.toString()+"\n"+playerHand.size()+"\n"+ Arrays.toString(cardsAtPlay)+"\n"+cardsAtPlay.length+"\n";
     }
 }
