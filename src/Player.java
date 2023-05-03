@@ -7,6 +7,7 @@ public class Player{
     private String name;
     private ArrayList<Card> playerHand;
     private Card[] cardsAtPlay;
+    private boolean isPlayer1;
     public static ArrayList<Card> leftPile = new ArrayList<>();
     public static ArrayList<Card> rightPile = new ArrayList<>();
     private static byte numPlayers = 0;
@@ -15,9 +16,11 @@ public class Player{
         this.name = name;
         playerHand = new ArrayList<>();
         if(numPlayers == 1) {
+            isPlayer1 = true;
             for(int i = 0; i < 26; i++) playerHand.add(Deck.deck.get(i));
         }
         else if(numPlayers == 2){
+            isPlayer1 = false;
             for(int i = 26; i < Deck.deck.size();i++) {
                 playerHand.add(Deck.deck.get(i));
             }
@@ -47,7 +50,8 @@ public class Player{
         playerHand.removeAll(List.of(cardsAtPlay));
     }
     public void spit(){
-
+        if(isPlayer1) leftPile.add(playerHand.get(0));
+        else rightPile.add(playerHand.get(0));
     }
     public String toString(){
         return getName()+"\n"+playerHand.toString()+"\n"+playerHand.size()+"\n"+ Arrays.toString(cardsAtPlay)+"\n"+cardsAtPlay.length+"\n";
