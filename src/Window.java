@@ -1,21 +1,21 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
 
 public class Window extends JFrame implements ActionListener {
     private JButton start;
-    public Window(){
+    public Window() throws IOException {
+        Deck.genDeck();
         JPanel startMenu = new JPanel();
         JPanel centerPanel = new JPanel();
         centerPanel.setLayout(new FlowLayout());
 
         start = new JButton("Start Game");
         start.setFocusable(false);
-        /*start.setOpaque(false);
+        start.setOpaque(false);
         start.setContentAreaFilled(false);
-
         start.setBorderPainted(false);
-         */
         start.setFont(new Font("Comic Sans MS",Font.PLAIN, 30));
         start.addActionListener(e -> {
             System.out.println("start button pressed");
@@ -24,12 +24,10 @@ public class Window extends JFrame implements ActionListener {
         start.addMouseListener((new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                System.out.println("start entered");
                 start.setFont(new Font("Comic Sans MS Bold",Font.PLAIN, 30));
             }
             @Override
             public void mouseExited(MouseEvent e){
-                System.out.println("start exited");
                 start.setFont(new Font("Comic Sans MS",Font.PLAIN, 30));
             }
         }));
@@ -41,6 +39,20 @@ public class Window extends JFrame implements ActionListener {
         help.setFocusable(false);
         help.setAlignmentX(Component.CENTER_ALIGNMENT);
         help.setVisible(true);
+        help.setOpaque(false);
+        help.setContentAreaFilled(false);
+        help.setBorderPainted(false);
+        help.setFont(new Font("Comic Sans MS",Font.PLAIN, 30));
+        help.addMouseListener((new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                help.setFont(new Font("Comic Sans MS Bold",Font.PLAIN, 33));
+            }
+            @Override
+            public void mouseExited(MouseEvent e){
+                help.setFont(new Font("Comic Sans MS",Font.PLAIN, 30));
+            }
+        }));
         centerPanel.add(help);
 
         this.setTitle("Spit");

@@ -8,8 +8,8 @@ public class Player{
     private ArrayList<Card> playerHand;
     private Card[] cardsAtPlay;
     private boolean isPlayer1;
-    public static ArrayList<Card> leftPile = new ArrayList<>();
-    public static ArrayList<Card> rightPile = new ArrayList<>();
+    private static ArrayList<Card> leftPile = new ArrayList<>();
+    private static ArrayList<Card> rightPile = new ArrayList<>();
     private static byte numPlayers = 0;
     public Player(String name) throws IOException {
         numPlayers++;
@@ -26,6 +26,15 @@ public class Player{
             }
         }
         cardsAtPlay = new Card[15];
+                /*{
+            {null},
+            {null,null},
+            {null,null,null},
+            {null,null,null,null},
+            {null,null,null,null,null}
+        };
+
+                 */
         grabcardsAtPlay();
     }
 
@@ -44,8 +53,14 @@ public class Player{
         return cardsAtPlay;
     }
     public void grabcardsAtPlay(){
-        for(int i = 0; i < 15; i ++){
-            cardsAtPlay[i] = playerHand.get(i);
+        if(playerHand.size() < 15){
+            for (int i = 0; i < playerHand.size(); i++) {
+                cardsAtPlay[i] = playerHand.get(i);
+            }
+        }else {
+            for (int i = 0; i < 15; i++) {
+                cardsAtPlay[i] = playerHand.get(i);
+            }
         }
         playerHand.removeAll(List.of(cardsAtPlay));
     }
