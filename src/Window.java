@@ -11,7 +11,14 @@ public class Window extends JFrame{
 
         JPanel test = new JPanel();
         myImageIcon testimage = new myImageIcon(Deck.deck.get(0).getCARD_FRONT(),Deck.deck.get(0));
+
+
         JLabel test2 = new JLabel(testimage);
+        test2.addMouseListener(new MouseAdapter(){
+            public void
+        });
+
+
         test2.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -65,6 +72,7 @@ public class Window extends JFrame{
             }
         }));
         centerPanel.add(help);
+
 
         this.setTitle("Spit");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
