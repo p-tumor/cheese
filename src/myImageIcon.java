@@ -48,6 +48,9 @@ public class myImageIcon extends ImageIcon {
     public myImageIcon(Card card) {
         this.card = card;
     }
+    public void setCard(Card c){
+        card = c;
+    }
 
     public Card getCard() {
         return card;

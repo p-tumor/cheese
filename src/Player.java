@@ -6,7 +6,7 @@ import java.util.List;
 public class Player{
     private String name;
     private ArrayList<Card> playerHand;
-    private Card[][] cardsAtPlay;
+    private Card[] cardsAtPlay;
     private boolean isPlayer1;
     private static ArrayList<Card> leftPile = new ArrayList<>();
     private static ArrayList<Card> rightPile = new ArrayList<>();
@@ -25,13 +25,7 @@ public class Player{
                 playerHand.add(Deck.deck.get(i));
             }
         }
-        cardsAtPlay = new Card[][]{
-            {null},
-            {null,null},
-            {null,null,null},
-            {null,null,null,null},
-            {null,null,null,null,null}
-        };
+        cardsAtPlay = new Card[15];
         grabCardsAtPlay();
     }
 
@@ -46,26 +40,21 @@ public class Player{
     public void addCard(Card card) {
         playerHand.add(card);
     }
-    public Card[][] getCardsAtPlay(){
+    public Card[] getCardsAtPlay(){
         return cardsAtPlay;
     }
     public void grabCardsAtPlay(){
         if(playerHand.size() < 15){
-            for(Card[] playPile: cardsAtPlay) {
-                for (int i = 0; i < playerHand.size(); i++) {
-                    playPile[i] = playerHand.get(i);
-                }
+            for (int i = 0; i < playerHand.size(); i++) {
+                cardsAtPlay[i] = playerHand.get(i);
             }
+
         }else {
-            for(Card[] playPile: cardsAtPlay) {
-                for (int i = 0; i < playerHand.size(); i++) {
-                    playPile[i] = playerHand.get(i);
-                }
+            for (int i = 0; i < playerHand.size(); i++) {
+                cardsAtPlay[i] = playerHand.get(i);
             }
         }
-        for(Card[] cards: cardsAtPlay) {
-            playerHand.removeAll(List.of(cards));
-        }
+        playerHand.removeAll(List.of(cardsAtPlay));
     }
     public void takePile(boolean choice){
         if(choice) {
@@ -79,18 +68,170 @@ public class Player{
         }
     }
     public void playCard(int cardsAtPlayIndex, boolean isLeftPile){
+        String cardVal = leftPile.get(leftPile.size()-1).getCARD_VAL();
+        Card card = cardsAtPlay[cardsAtPlayIndex];
         if(isLeftPile){
-            String cardVal = leftPile.get(leftPile.size()-1).getCARD_VAL();
-            Card card = Deck.deck.get(0);
             switch (cardVal) {
                 case "2" ->{
                     if(card.getCARD_VAL().equals("A") || card.getCARD_VAL().equals("3")){
-
+                        leftPile.add(cardsAtPlay[cardsAtPlayIndex]);
+                        cardsAtPlay[cardsAtPlayIndex] = null;
+                    }
+                }
+                case "3" ->{
+                    if(card.getCARD_VAL().equals("2") || card.getCARD_VAL().equals("3")){
+                        leftPile.add(cardsAtPlay[cardsAtPlayIndex]);
+                        cardsAtPlay[cardsAtPlayIndex] = null;
+                    }
+                }
+                case "4" ->{
+                    if(card.getCARD_VAL().equals("3") || card.getCARD_VAL().equals("5")){
+                        leftPile.add(cardsAtPlay[cardsAtPlayIndex]);
+                        cardsAtPlay[cardsAtPlayIndex] = null;
+                    }
+                }
+                case "5" ->{
+                    if(card.getCARD_VAL().equals("4") || card.getCARD_VAL().equals("6")){
+                        leftPile.add(cardsAtPlay[cardsAtPlayIndex]);
+                        cardsAtPlay[cardsAtPlayIndex] = null;
+                    }
+                }
+                case "6" ->{
+                    if(card.getCARD_VAL().equals("5") || card.getCARD_VAL().equals("7")){
+                        leftPile.add(cardsAtPlay[cardsAtPlayIndex]);
+                        cardsAtPlay[cardsAtPlayIndex] = null;
+                    }
+                }
+                case "7" ->{
+                    if(card.getCARD_VAL().equals("6") || card.getCARD_VAL().equals("8")){
+                        leftPile.add(cardsAtPlay[cardsAtPlayIndex]);
+                        cardsAtPlay[cardsAtPlayIndex] = null;
+                    }
+                }
+                case "8" ->{
+                    if(card.getCARD_VAL().equals("7") || card.getCARD_VAL().equals("9")){
+                        leftPile.add(cardsAtPlay[cardsAtPlayIndex]);
+                        cardsAtPlay[cardsAtPlayIndex] = null;
+                    }
+                }
+                case "9" ->{
+                    if(card.getCARD_VAL().equals("8") || card.getCARD_VAL().equals("10")){
+                        leftPile.add(cardsAtPlay[cardsAtPlayIndex]);
+                        cardsAtPlay[cardsAtPlayIndex] = null;
+                    }
+                }
+                case "10" ->{
+                    if(card.getCARD_VAL().equals("9") || card.getCARD_VAL().equals("J")){
+                        leftPile.add(cardsAtPlay[cardsAtPlayIndex]);
+                        cardsAtPlay[cardsAtPlayIndex] = null;
+                    }
+                }
+                case "J" ->{
+                    if(card.getCARD_VAL().equals("10") || card.getCARD_VAL().equals("Q")){
+                        leftPile.add(cardsAtPlay[cardsAtPlayIndex]);
+                        cardsAtPlay[cardsAtPlayIndex] = null;
+                    }
+                }
+                case "Q" ->{
+                    if(card.getCARD_VAL().equals("J") || card.getCARD_VAL().equals("K")){
+                        leftPile.add(cardsAtPlay[cardsAtPlayIndex]);
+                        cardsAtPlay[cardsAtPlayIndex] = null;
+                    }
+                }
+                case "K" ->{
+                    if(card.getCARD_VAL().equals("Q") || card.getCARD_VAL().equals("A")){
+                        leftPile.add(cardsAtPlay[cardsAtPlayIndex]);
+                        cardsAtPlay[cardsAtPlayIndex] = null;
+                    }
+                }
+                case "A" ->{
+                    if(card.getCARD_VAL().equals("K") || card.getCARD_VAL().equals("2")){
+                        leftPile.add(cardsAtPlay[cardsAtPlayIndex]);
+                        cardsAtPlay[cardsAtPlayIndex] = null;
                     }
                 }
             }
-        }else{
-
+        }else {
+            switch (cardVal) {
+                case "2" -> {
+                    if (card.getCARD_VAL().equals("A") || card.getCARD_VAL().equals("3")) {
+                        rightPile.add(cardsAtPlay[cardsAtPlayIndex]);
+                        cardsAtPlay[cardsAtPlayIndex] = null;
+                    }
+                }
+                case "3" -> {
+                    if (card.getCARD_VAL().equals("2") || card.getCARD_VAL().equals("3")) {
+                        rightPile.add(cardsAtPlay[cardsAtPlayIndex]);
+                        cardsAtPlay[cardsAtPlayIndex] = null;
+                    }
+                }
+                case "4" -> {
+                    if (card.getCARD_VAL().equals("3") || card.getCARD_VAL().equals("5")) {
+                        rightPile.add(cardsAtPlay[cardsAtPlayIndex]);
+                        cardsAtPlay[cardsAtPlayIndex] = null;
+                    }
+                }
+                case "5" -> {
+                    if (card.getCARD_VAL().equals("4") || card.getCARD_VAL().equals("6")) {
+                        rightPile.add(cardsAtPlay[cardsAtPlayIndex]);
+                        cardsAtPlay[cardsAtPlayIndex] = null;
+                    }
+                }
+                case "6" -> {
+                    if (card.getCARD_VAL().equals("5") || card.getCARD_VAL().equals("7")) {
+                        rightPile.add(cardsAtPlay[cardsAtPlayIndex]);
+                        cardsAtPlay[cardsAtPlayIndex] = null;
+                    }
+                }
+                case "7" -> {
+                    if (card.getCARD_VAL().equals("6") || card.getCARD_VAL().equals("8")) {
+                        rightPile.add(cardsAtPlay[cardsAtPlayIndex]);
+                        cardsAtPlay[cardsAtPlayIndex] = null;
+                    }
+                }
+                case "8" -> {
+                    if (card.getCARD_VAL().equals("7") || card.getCARD_VAL().equals("9")) {
+                        rightPile.add(cardsAtPlay[cardsAtPlayIndex]);
+                        cardsAtPlay[cardsAtPlayIndex] = null;
+                    }
+                }
+                case "9" -> {
+                    if (card.getCARD_VAL().equals("8") || card.getCARD_VAL().equals("10")) {
+                        rightPile.add(cardsAtPlay[cardsAtPlayIndex]);
+                        cardsAtPlay[cardsAtPlayIndex] = null;
+                    }
+                }
+                case "10" -> {
+                    if (card.getCARD_VAL().equals("9") || card.getCARD_VAL().equals("J")) {
+                        rightPile.add(cardsAtPlay[cardsAtPlayIndex]);
+                        cardsAtPlay[cardsAtPlayIndex] = null;
+                    }
+                }
+                case "J" -> {
+                    if (card.getCARD_VAL().equals("10") || card.getCARD_VAL().equals("Q")) {
+                        rightPile.add(cardsAtPlay[cardsAtPlayIndex]);
+                        cardsAtPlay[cardsAtPlayIndex] = null;
+                    }
+                }
+                case "Q" -> {
+                    if (card.getCARD_VAL().equals("J") || card.getCARD_VAL().equals("K")) {
+                        rightPile.add(cardsAtPlay[cardsAtPlayIndex]);
+                        cardsAtPlay[cardsAtPlayIndex] = null;
+                    }
+                }
+                case "K" -> {
+                    if (card.getCARD_VAL().equals("Q") || card.getCARD_VAL().equals("A")) {
+                        rightPile.add(cardsAtPlay[cardsAtPlayIndex]);
+                        cardsAtPlay[cardsAtPlayIndex] = null;
+                    }
+                }
+                case "A" -> {
+                    if (card.getCARD_VAL().equals("K") || card.getCARD_VAL().equals("2")) {
+                        rightPile.add(cardsAtPlay[cardsAtPlayIndex]);
+                        cardsAtPlay[cardsAtPlayIndex] = null;
+                    }
+                }
+            }
         }
     }
     public void spit(){
