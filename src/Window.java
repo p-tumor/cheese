@@ -10,6 +10,8 @@ public class Window extends JFrame{
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setSize(750, 750);
         this.setResizable(false);
+        this.setLocationRelativeTo(null);
+
 
         Deck.genDeck();
         JPanel forAllCards = new JPanel();
@@ -18,7 +20,9 @@ public class Window extends JFrame{
         }
 
         JPanel startMenu = new JPanel();
+        startMenu.setDoubleBuffered(true);
         JPanel centerStartMenu = new JPanel(new FlowLayout());
+        centerStartMenu.setDoubleBuffered(true);
 
         JPanel test = new JPanel();
         myImageIcon testimage = new myImageIcon(Deck.deck.get(0).getCARD_FRONT(),Deck.deck.get(0));
@@ -60,7 +64,9 @@ public class Window extends JFrame{
             }
             @Override
             public void mouseClicked(MouseEvent e){
-                removeAll();
+                //removeAll();
+                remove(startMenu);
+                remove(centerStartMenu);
                 add(forAllCards);
                 repaint();
             }
