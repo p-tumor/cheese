@@ -1,9 +1,12 @@
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
 
 public class Window extends JFrame{
+    private Font BIGGER = new Font("Comic Sans MS Bold", Font.PLAIN, 33);
+    private Font SMALLER = new Font("Comic Sans MS", Font.PLAIN, 30);
     public Window() throws IOException {
         super("Spit");
         //gen Jframe
@@ -12,28 +15,53 @@ public class Window extends JFrame{
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         //this.setLayout(null);
-        JLabel back = new JLabel(new ImageIcon("src/backFrame.png"));
+        /*JLabel back = new JLabel(new ImageIcon("src/backFrame.png"));
         back.setBounds(0,0,getWidth(),getHeight());
         this.add(back);
 
+         */
 
-        TransparentPanel omniscient = new TransparentPanel();
+
+        JPanel omniscient = new JPanel();
         omniscient.setLayout(new CardLayout());
         CardLayout omniscientLayout = (CardLayout) omniscient.getLayout();
 
+        JPanel helpPage = new JPanel(new BorderLayout());
+        JLabel helpText = new JLabel("This is the help menu");
+        helpPage.add(helpText);
+        JButton helpDone = new JButton("Done!");
+
+        // Building game board----------------------------------------------------------------------------------------------------------------------
+        JPanel omniscientBoard = new JPanel(new BorderLayout());
+
+        JPanel northBoard
+        JLabel p1Cards = new JLabel();
+        omniscientBoard.add(p1Cards,BorderLayout.NORTH);
+
+        JLabel p2Cards = new JLabel();
+        p2Cards.setBackground(Color.green);
+        omniscientBoard.add(p2Cards,BorderLayout.SOUTH);
+
+        EmptyBorder leftBoardBorder = BorderFactory.createEmptyBorder();
+        leftBoardBorder.setBackground(Color.red);
+        omniscientBoard.add(leftBoardBorder,BorderLayout.WEST);
+
+        JPanel rightBoardBorder = new JPanel();
+        rightBoardBorder.setBackground(Color.blue);
+        omniscientBoard.add(rightBoardBorder,BorderLayout.EAST);
+
+
         Deck.genDeck();
-        TransparentPanel forAllCards = new TransparentPanel();
+        JPanel forAllCards = new JPanel();
         for(Card c: Deck.deck){
             forAllCards.add(new JLabel(new myImageIcon(c.getCARD_FRONT(),c)));
         }
 
-        TransparentPanel startMenu = new TransparentPanel();
-        startMenu.setLayout(new BorderLayout());
-        TransparentPanel centerStartMenu = new TransparentPanel();
-        centerStartMenu.setLayout(new FlowLayout());
+        JPanel startMenu = new JPanel(new BorderLayout());
+        JPanel centerStartMenu = new JPanel(new FlowLayout());
 
 
-        TransparentPanel test = new TransparentPanel();
+        JPanel test = new JPanel();
         myImageIcon testimage = new myImageIcon(Deck.deck.get(0).getCARD_FRONT(),Deck.deck.get(0));
 
 
@@ -57,19 +85,19 @@ public class Window extends JFrame{
         start.setOpaque(false);
         start.setContentAreaFilled(false);
         start.setBorderPainted(false);
-        start.setFont(new Font("Comic Sans MS", Font.PLAIN, 30));
+        start.setFont(SMALLER);
         start.addActionListener(e -> {
-            System.out.println("start button pressed");
+            omniscientLayout.show(omniscient,"game");
         });
         start.addMouseListener((new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                start.setFont(new Font("Comic Sans MS Bold", Font.PLAIN, 30));
+                start.setFont(BIGGER);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                start.setFont(new Font("Comic Sans MS", Font.PLAIN, 30));
+                start.setFont(SMALLER);
             }
         }));
         start.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -85,34 +113,60 @@ public class Window extends JFrame{
         help.setContentAreaFilled(false);
         help.setBorderPainted(false);
         help.setFont(new Font("Comic Sans MS", Font.PLAIN, 30));
+        help.addActionListener(e -> {
+            omniscientLayout.show(omniscient, "helpPage");
+            System.out.println(helpDone.getWidth());
+            System.out.println(helpDone.getHeight());
+        });
         help.addMouseListener((new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                help.setFont(new Font("Comic Sans MS Bold", Font.PLAIN, 33));
+                help.setFont(BIGGER);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                help.setFont(new Font("Comic Sans MS", Font.PLAIN, 30));
+                help.setFont(SMALLER);
             }
         }));
         centerStartMenu.add(help, BorderLayout.CENTER);
 
+        //Building the "Done!" button in the helpPage-----------------------------------------------------------------------------------
+        helpDone.setVerticalAlignment(SwingConstants.BOTTOM);
+        helpDone.setFocusable(false);
+        helpDone.setOpaque(false);
+        helpDone.setContentAreaFilled(false);
+        helpDone.setBorderPainted(false);
+        helpDone.addActionListener(e ->{
+            omniscientLayout.show(omniscient,"startMenu");
+        });
+        helpDone.setFont(new Font("Comic Sans MS", Font.PLAIN, 30));
+        helpDone.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                helpDone.setFont(BIGGER);
+            }
+            @Override
+            public void mouseExited(MouseEvent e){
+                helpDone.setFont(SMALLER);
+            }
+        });
+
+        helpPage.add(helpDone, BorderLayout.WEST);
 
 
-        //Title in MainMenu-------------------------------------------------------------------------------------------------
+
+        //Title in MainMenu------------------------------------------------------------------------------------------------------------------------
         JLabel title = new JLabel("Welcome to Spit!");
         title.setFont(new Font("Comic Sans MS", Font.BOLD, 40));
         title.setHorizontalAlignment(SwingConstants.CENTER);
         startMenu.add(title, BorderLayout.NORTH);
         startMenu.add(centerStartMenu, BorderLayout.CENTER);
-        //startMenu.set
-        /*this.add(startMenu, BorderLayout.NORTH);
-        this.add(centerStartMenu, BorderLayout.CENTER);
-        this.add(test,BorderLayout.SOUTH);
 
-         */
-        omniscient.add(startMenu);
+        //Final additions----------------------------------------------------------------------------------------------------------------------
+        omniscient.add(startMenu, "startMenu");
+        omniscient.add(helpPage, "helpPage");
+        omniscient.add(omniscientBoard, "game");
         this.add(omniscient);
 
         this.setVisible(true);

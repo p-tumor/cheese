@@ -4,6 +4,7 @@ import java.awt.*;
 public class TransparentPanel extends JPanel {
     public TransparentPanel(){
         setOpaque(true);
+
     }
     @Override
     protected void paintComponent(Graphics g) {
