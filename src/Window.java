@@ -11,20 +11,29 @@ public class Window extends JFrame{
         this.setSize(750, 750);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
+        //this.setLayout(null);
+        JLabel back = new JLabel(new ImageIcon("src/backFrame.png"));
+        back.setBounds(0,0,getWidth(),getHeight());
+        this.add(back);
 
+
+        TransparentPanel omniscient = new TransparentPanel();
+        omniscient.setLayout(new CardLayout());
+        CardLayout omniscientLayout = (CardLayout) omniscient.getLayout();
 
         Deck.genDeck();
-        JPanel forAllCards = new JPanel();
+        TransparentPanel forAllCards = new TransparentPanel();
         for(Card c: Deck.deck){
             forAllCards.add(new JLabel(new myImageIcon(c.getCARD_FRONT(),c)));
         }
 
-        JPanel startMenu = new JPanel();
-        startMenu.setDoubleBuffered(true);
-        JPanel centerStartMenu = new JPanel(new FlowLayout());
-        centerStartMenu.setDoubleBuffered(true);
+        TransparentPanel startMenu = new TransparentPanel();
+        startMenu.setLayout(new BorderLayout());
+        TransparentPanel centerStartMenu = new TransparentPanel();
+        centerStartMenu.setLayout(new FlowLayout());
 
-        JPanel test = new JPanel();
+
+        TransparentPanel test = new TransparentPanel();
         myImageIcon testimage = new myImageIcon(Deck.deck.get(0).getCARD_FRONT(),Deck.deck.get(0));
 
 
@@ -62,18 +71,10 @@ public class Window extends JFrame{
             public void mouseExited(MouseEvent e) {
                 start.setFont(new Font("Comic Sans MS", Font.PLAIN, 30));
             }
-            @Override
-            public void mouseClicked(MouseEvent e){
-                //removeAll();
-                remove(startMenu);
-                remove(centerStartMenu);
-                add(forAllCards);
-                repaint();
-            }
         }));
         start.setAlignmentX(Component.CENTER_ALIGNMENT);
         start.setVisible(true);
-        centerStartMenu.add(start);
+        centerStartMenu.add(start, BorderLayout.CENTER);
 
         //Help button on Main Menu---------------------------------------------------------------------------------------------
         JButton help = new JButton("Help");
@@ -95,22 +96,24 @@ public class Window extends JFrame{
                 help.setFont(new Font("Comic Sans MS", Font.PLAIN, 30));
             }
         }));
-        centerStartMenu.add(help);
+        centerStartMenu.add(help, BorderLayout.CENTER);
 
-        //TEST---------------------------------------------------------------------------------------------------------------------------
 
 
         //Title in MainMenu-------------------------------------------------------------------------------------------------
         JLabel title = new JLabel("Welcome to Spit!");
         title.setFont(new Font("Comic Sans MS", Font.BOLD, 40));
-        startMenu.add(title);
-
+        title.setHorizontalAlignment(SwingConstants.CENTER);
+        startMenu.add(title, BorderLayout.NORTH);
+        startMenu.add(centerStartMenu, BorderLayout.CENTER);
         //startMenu.set
-        this.add(startMenu, BorderLayout.NORTH);
+        /*this.add(startMenu, BorderLayout.NORTH);
         this.add(centerStartMenu, BorderLayout.CENTER);
         this.add(test,BorderLayout.SOUTH);
 
-
+         */
+        omniscient.add(startMenu);
+        this.add(omniscient);
 
         this.setVisible(true);
     }
