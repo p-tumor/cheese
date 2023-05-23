@@ -1,5 +1,5 @@
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
@@ -14,6 +14,7 @@ public class Window extends JFrame{
         this.setSize(750, 750);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
+        Deck.genDeck();
         //this.setLayout(null);
         /*JLabel back = new JLabel(new ImageIcon("src/backFrame.png"));
         back.setBounds(0,0,getWidth(),getHeight());
@@ -34,24 +35,53 @@ public class Window extends JFrame{
         // Building game board----------------------------------------------------------------------------------------------------------------------
         JPanel omniscientBoard = new JPanel(new BorderLayout());
 
-        JPanel northBoard
-        JLabel p1Cards = new JLabel();
-        omniscientBoard.add(p1Cards,BorderLayout.NORTH);
+        JPanel northBoard = new JPanel();
+        northBoard.setPreferredSize(new Dimension(100,75));
+        northBoard.setBackground(Color.orange);
+        JLabel p1Cards = new JLabel(new ImageIcon(Deck.deck.get(0).getCARD_FRONT()));
+        northBoard.add(p1Cards);
+        omniscientBoard.add(northBoard,BorderLayout.NORTH);
 
-        JLabel p2Cards = new JLabel();
-        p2Cards.setBackground(Color.green);
-        omniscientBoard.add(p2Cards,BorderLayout.SOUTH);
+        JPanel southBoard = new JPanel();
+        southBoard.setPreferredSize(new Dimension(100,75));
+        southBoard.setBackground(Color.pink);
+        JLabel p2Cards = new JLabel(new ImageIcon(Deck.deck.get(1).getCARD_FRONT()));
+        southBoard.add(p2Cards);
+        omniscientBoard.add(southBoard,BorderLayout.SOUTH);
 
-        EmptyBorder leftBoardBorder = BorderFactory.createEmptyBorder();
-        leftBoardBorder.setBackground(Color.red);
-        omniscientBoard.add(leftBoardBorder,BorderLayout.WEST);
+        JPanel westBoard = new JPanel();
+        westBoard.setPreferredSize(new Dimension(100,100));
+        westBoard.setBackground(Color.red);
+        omniscientBoard.add(westBoard, BorderLayout.WEST);
 
-        JPanel rightBoardBorder = new JPanel();
-        rightBoardBorder.setBackground(Color.blue);
-        omniscientBoard.add(rightBoardBorder,BorderLayout.EAST);
+        JPanel eastBoard = new JPanel();
+        eastBoard.setPreferredSize(new Dimension(100,100));
+        eastBoard.setBackground(Color.blue);
+        omniscientBoard.add(eastBoard,BorderLayout.EAST);
+
+        JPanel centerBoard = new JPanel(new GridBagLayout());
+        GridBagConstraints centerCons = new GridBagConstraints();
+        centerCons.gridx = 0;
+        centerCons.gridy = 0;
+        centerCons.weightx = 1.0;
+        centerCons.weighty = 1.0;
+        centerCons.fill = GridBagConstraints.VERTICAL;
+        centerCons.anchor = GridBagConstraints.CENTER;
+        JPanel left = new JPanel();
+        left.setBackground(Color.green);
+        JPanel right = new JPanel();
+        right.setBackground(Color.gray);
+        JLabel leftPile = new JLabel(new ImageIcon(Deck.deck.get(3).getCARD_FRONT()));
+        left.add(leftPile);
+        centerBoard.add(left, centerCons);
+
+        JLabel rightPile = new JLabel(new ImageIcon(Deck.deck.get(6).getCARD_FRONT()));
+        right.add(rightPile);
+        centerBoard.add(right, centerCons);
+
+        omniscientBoard.add(centerBoard,BorderLayout.CENTER);
 
 
-        Deck.genDeck();
         JPanel forAllCards = new JPanel();
         for(Card c: Deck.deck){
             forAllCards.add(new JLabel(new myImageIcon(c.getCARD_FRONT(),c)));
