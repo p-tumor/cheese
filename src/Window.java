@@ -1,5 +1,6 @@
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.plaf.basic.BasicOptionPaneUI;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
@@ -59,25 +60,21 @@ public class Window extends JFrame{
         eastBoard.setBackground(Color.blue);
         omniscientBoard.add(eastBoard,BorderLayout.EAST);
 
-        JPanel centerBoard = new JPanel(new GridBagLayout());
-        GridBagConstraints centerCons = new GridBagConstraints();
-        centerCons.gridx = 0;
-        centerCons.gridy = 0;
-        centerCons.weightx = 1.0;
-        centerCons.weighty = 1.0;
-        centerCons.fill = GridBagConstraints.VERTICAL;
-        centerCons.anchor = GridBagConstraints.CENTER;
-        JPanel left = new JPanel();
+        JPanel centerBoard = new JPanel();
+        centerBoard.setLayout(new BoxLayout(centerBoard,BoxLayout.X_AXIS));
+        JPanel left = new JPanel(new BorderLayout());
         left.setBackground(Color.green);
-        JPanel right = new JPanel();
+        JPanel right = new JPanel(new BorderLayout());
         right.setBackground(Color.gray);
+
         JLabel leftPile = new JLabel(new ImageIcon(Deck.deck.get(3).getCARD_FRONT()));
-        left.add(leftPile);
-        centerBoard.add(left, centerCons);
+        leftPile.setAlignmentX(Component.CENTER_ALIGNMENT);
+        left.add(leftPile, BorderLayout.CENTER);
+        centerBoard.add(left);
 
         JLabel rightPile = new JLabel(new ImageIcon(Deck.deck.get(6).getCARD_FRONT()));
-        right.add(rightPile);
-        centerBoard.add(right, centerCons);
+        right.add(rightPile, BorderLayout.CENTER);
+        centerBoard.add(right);
 
         omniscientBoard.add(centerBoard,BorderLayout.CENTER);
 
@@ -145,8 +142,8 @@ public class Window extends JFrame{
         help.setFont(new Font("Comic Sans MS", Font.PLAIN, 30));
         help.addActionListener(e -> {
             omniscientLayout.show(omniscient, "helpPage");
-            System.out.println(helpDone.getWidth());
-            System.out.println(helpDone.getHeight());
+            System.out.println(helpDone.getX());
+            System.out.println(helpDone.getY());
         });
         help.addMouseListener((new MouseAdapter() {
             @Override
@@ -162,11 +159,20 @@ public class Window extends JFrame{
         centerStartMenu.add(help, BorderLayout.CENTER);
 
         //Building the "Done!" button in the helpPage-----------------------------------------------------------------------------------
+        JPanel donePanel = new JPanel(new GridBagLayout());
+        donePanel.setBackground(Color.red);
+        GridBagConstraints c = new GridBagConstraints();
+        c.gridheight = 6;
+        c.gridwidth = 1;
+        c.gridx = 0;
+        c.gridy = 6;
         helpDone.setVerticalAlignment(SwingConstants.BOTTOM);
-        helpDone.setFocusable(false);
+        /*helpDone.setFocusable(false);
         helpDone.setOpaque(false);
         helpDone.setContentAreaFilled(false);
         helpDone.setBorderPainted(false);
+
+         */
         helpDone.addActionListener(e ->{
             omniscientLayout.show(omniscient,"startMenu");
         });
@@ -181,8 +187,8 @@ public class Window extends JFrame{
                 helpDone.setFont(SMALLER);
             }
         });
-
-        helpPage.add(helpDone, BorderLayout.WEST);
+        donePanel.add(helpDone, c);
+        helpPage.add(donePanel, BorderLayout.WEST);
 
 
 
