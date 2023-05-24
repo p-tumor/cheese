@@ -28,9 +28,9 @@ public class Window extends JFrame{
         omniscient.setLayout(new CardLayout());
         CardLayout omniscientLayout = (CardLayout) omniscient.getLayout();
 
-        JPanel helpPage = new JPanel(new BorderLayout());
-        JLabel helpText = new JLabel("This is the help menu");
-        helpPage.add(helpText);
+        JPanel helpPage = new JPanel(new BorderLayout(10,0));
+        JLabel helpText = new JLabel("This is the help menu.");
+        helpText.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
         JButton helpDone = new JButton("Done!");
 
         // Building game board----------------------------------------------------------------------------------------------------------------------
@@ -142,8 +142,8 @@ public class Window extends JFrame{
         help.setFont(new Font("Comic Sans MS", Font.PLAIN, 30));
         help.addActionListener(e -> {
             omniscientLayout.show(omniscient, "helpPage");
-            System.out.println(helpDone.getX());
-            System.out.println(helpDone.getY());
+            System.out.println("ini w: "+ helpDone.getWidth());
+            System.out.println("ini h: "+helpDone.getHeight());
         });
         help.addMouseListener((new MouseAdapter() {
             @Override
@@ -159,20 +159,13 @@ public class Window extends JFrame{
         centerStartMenu.add(help, BorderLayout.CENTER);
 
         //Building the "Done!" button in the helpPage-----------------------------------------------------------------------------------
-        JPanel donePanel = new JPanel(new GridBagLayout());
+        JPanel donePanel = new JPanel(new BorderLayout());
         donePanel.setBackground(Color.red);
-        GridBagConstraints c = new GridBagConstraints();
-        c.gridheight = 6;
-        c.gridwidth = 1;
-        c.gridx = 0;
-        c.gridy = 6;
-        helpDone.setVerticalAlignment(SwingConstants.BOTTOM);
-        /*helpDone.setFocusable(false);
+        donePanel.setPreferredSize(new Dimension(150,150));
+        helpDone.setFocusable(false);
         helpDone.setOpaque(false);
         helpDone.setContentAreaFilled(false);
         helpDone.setBorderPainted(false);
-
-         */
         helpDone.addActionListener(e ->{
             omniscientLayout.show(omniscient,"startMenu");
         });
@@ -181,15 +174,21 @@ public class Window extends JFrame{
             @Override
             public void mouseEntered(MouseEvent e) {
                 helpDone.setFont(BIGGER);
+                System.out.println("w: "+ helpDone.getWidth());
+                System.out.println("h: "+helpDone.getHeight());
             }
             @Override
             public void mouseExited(MouseEvent e){
                 helpDone.setFont(SMALLER);
             }
         });
-        donePanel.add(helpDone, c);
-        helpPage.add(donePanel, BorderLayout.WEST);
+        donePanel.add(helpDone, BorderLayout.SOUTH);
+        helpPage.add(donePanel,BorderLayout.WEST);
 
+        //Building text in help menu--------------------------------------------------------------------------------------------------------
+        JPanel helpTextPanel = new JPanel();
+        helpTextPanel.add(helpText);
+        helpPage.add(helpTextPanel,BorderLayout.CENTER);
 
 
         //Title in MainMenu------------------------------------------------------------------------------------------------------------------------
@@ -206,5 +205,10 @@ public class Window extends JFrame{
         this.add(omniscient);
 
         this.setVisible(true);
+    }
+    private String helpText(){
+        StringBuilder s = new StringBuilder();
+        s.append("taste");
+        return s.toString();
     }
 }
