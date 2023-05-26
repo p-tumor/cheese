@@ -8,12 +8,13 @@ public class Player{
     private ArrayList<Card> playerHand;
     private Card[] cardsAtPlay;
     private boolean isPlayer1;
+    private String playerName;
     private static ArrayList<Card> leftPile = new ArrayList<>();
     private static ArrayList<Card> rightPile = new ArrayList<>();
     private static byte numPlayers = 0;
-    public Player(String name) throws IOException {
+    public Player() throws IOException {
         numPlayers++;
-        this.name = name;
+        playerName = null;
         playerHand = new ArrayList<>();
         if(numPlayers == 1) {
             isPlayer1 = true;
@@ -50,7 +51,7 @@ public class Player{
             }
 
         }else {
-            for (int i = 0; i < playerHand.size(); i++) {
+            for (int i = 0; i < 15; i++) {
                 cardsAtPlay[i] = playerHand.get(i);
             }
         }
@@ -238,6 +239,14 @@ public class Player{
         if(isPlayer1) leftPile.add(playerHand.get(0));
         else rightPile.add(playerHand.get(0));
     }
+    public void setName(String s){
+        playerName = s;
+    }
+
+    public String getPlayerName() {
+        return playerName;
+    }
+
     public String toString(){
         return getName()+"\n"+playerHand.toString()+"\n"+playerHand.size()+"\n"+ Arrays.toString(cardsAtPlay)+"\n"+cardsAtPlay.length+"\n";
     }

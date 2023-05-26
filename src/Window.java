@@ -11,15 +11,17 @@ public class Window extends JFrame{
     private Font SMALLER = new Font("Comic Sans MS", Font.PLAIN, 30);
     private Action moveCard;
     private JLabel p2Cards;
+    private Player p1;
+    private Player p2;
     public Window() throws IOException {
-        super("Spit");
-        //gen Jframe
+        this.setTitle("Spit");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.setSize(750, 750);
+        this.setSize(500, 500);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         Deck.genDeck();
-
+        p1 = new Player();
+        p2 = new Player();
 
         JPanel omniscient = new JPanel();
         omniscient.setLayout(new CardLayout());
@@ -29,6 +31,47 @@ public class Window extends JFrame{
         JLabel helpText = new JLabel("This is the help menu.", SwingConstants.LEFT);
         helpText.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
         JButton helpDone = new JButton("Done!");
+
+        //Getting player names-----------------------------------------------------
+        JPanel playerCreation = new JPanel(new BorderLayout());
+        JPanel playerCenter = new JPanel();
+        playerCenter.setLayout(new BoxLayout(playerCenter,BoxLayout.X_AXIS));
+        JPanel p1Creation = new JPanel();
+        JTextField p1Name = new JTextField("Enter name: ");
+        p1Name.addMouse
+
+        p1Creation.add(p1Name);
+
+
+        JPanel p2Creation = new JPanel();
+        JTextField p2Name = new JTextField("Enter name: ");
+
+        p2Creation.add(p2Name);
+
+        JPanel playPanel = new JPanel();
+        JButton play = new JButton("Play!");
+        play.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                p1.setName(p1Name.getText());
+                p2.setName(p2Name.getText());
+                System.out.println(p1.getName());
+                System.out.println(p2.getName());
+                omniscientLayout.show(omniscient,"game");
+            }
+        });
+
+        playPanel.add(play, BorderLayout.SOUTH);
+
+        playerCenter.add(p1Creation);
+        playerCenter.add(p2Creation);
+
+        playerCreation.add(playerCenter, BorderLayout.CENTER);
+        playerCreation.add(playPanel, BorderLayout.SOUTH);
+
+
+
+
 
         // Building game board----------------------------------------------------------------------------------------------------------------------
         JPanel omniscientBoard = new JPanel(new BorderLayout());
@@ -118,7 +161,7 @@ public class Window extends JFrame{
         start.setBorderPainted(false);
         start.setFont(SMALLER);
         start.addActionListener(e -> {
-            omniscientLayout.show(omniscient,"game");
+            omniscientLayout.show(omniscient,"creation");
         });
         start.addMouseListener((new MouseAdapter() {
             @Override
@@ -204,6 +247,7 @@ public class Window extends JFrame{
         //Final additions----------------------------------------------------------------------------------------------------------------------
         omniscient.add(startMenu, "startMenu");
         omniscient.add(helpPage, "helpPage");
+        omniscient.add(playerCreation, "creation");
         omniscient.add(omniscientBoard, "game");
         this.add(omniscient);
 
