@@ -13,17 +13,19 @@ public class Window extends JFrame{
     private JLabel p2Cards;
     private Player p1;
     private Player p2;
+    String name1, name2;
+    boolean clicked1, clicked2;
     public Window() throws IOException {
         this.setTitle("Spit");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setSize(500, 500);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
-        Deck.genDeck();
+        clicked1 = clicked2 = false;
         p1 = new Player();
         p2 = new Player();
 
-        JPanel omniscient = new JPanel();
+        CardPanel omniscient = new CardPanel();
         omniscient.setLayout(new CardLayout());
         CardLayout omniscientLayout = (CardLayout) omniscient.getLayout();
 
@@ -38,14 +40,38 @@ public class Window extends JFrame{
         playerCenter.setLayout(new BoxLayout(playerCenter,BoxLayout.X_AXIS));
         JPanel p1Creation = new JPanel();
         JTextField p1Name = new JTextField("Enter name: ");
-        p1Name.addMouse
+        p1Name.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if(!clicked1) {
+                    p1Name.setText("");
+                    clicked1 = true;
+                }
+            }
 
-        p1Creation.add(p1Name);
-
+            @Override
+            public void focusLost(FocusEvent e) {
+                name1 = p1Name.getText();
+            }
+        });
 
         JPanel p2Creation = new JPanel();
         JTextField p2Name = new JTextField("Enter name: ");
+        p2Name.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if(!clicked2) {
+                    p2Name.setText("");
+                    clicked2 = true;
+                }
+            }
 
+            @Override
+            public void focusLost(FocusEvent e) {
+                name2 = p2Name.getText();
+            }
+        });
+        p1Creation.add(p1Name);
         p2Creation.add(p2Name);
 
         JPanel playPanel = new JPanel();
@@ -53,10 +79,8 @@ public class Window extends JFrame{
         play.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                p1.setName(p1Name.getText());
-                p2.setName(p2Name.getText());
-                System.out.println(p1.getName());
-                System.out.println(p2.getName());
+                p1.setName(name1);
+                p2.setName(name2);
                 omniscientLayout.show(omniscient,"game");
             }
         });
@@ -131,8 +155,10 @@ public class Window extends JFrame{
             forAllCards.add(new JLabel(new myImageIcon(c.getCARD_FRONT(),c)));
         }
 
-        JPanel startMenu = new JPanel(new BorderLayout());
-        JPanel centerStartMenu = new JPanel(new FlowLayout());
+        CardPanel startMenu = new CardPanel();
+        startMenu.setLayout(new BorderLayout());
+        TransparentPanel centerStartMenu = new TransparentPanel();
+        centerStartMenu.setLayout(new FlowLayout());
 
 
         JPanel test = new JPanel();
@@ -155,6 +181,7 @@ public class Window extends JFrame{
 
         //Start button in main menu--------------------------------------------------------------------------------------------
         JButton start = new JButton("Start Game");
+        start.setForeground(Color.WHITE);
         start.setFocusable(false);
         start.setOpaque(false);
         start.setContentAreaFilled(false);
@@ -180,6 +207,7 @@ public class Window extends JFrame{
 
         //Help button on Main Menu---------------------------------------------------------------------------------------------
         JButton help = new JButton("Help");
+        help.setForeground(Color.WHITE);
         help.setFocusable(false);
         help.setAlignmentX(Component.CENTER_ALIGNMENT);
         help.setVisible(true);
