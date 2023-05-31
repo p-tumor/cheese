@@ -65,7 +65,6 @@ public class Window extends JFrame{
                     clicked2 = true;
                 }
             }
-
             @Override
             public void focusLost(FocusEvent e) {
                 name2 = p2Name.getText();
@@ -108,6 +107,7 @@ public class Window extends JFrame{
         omniscientBoard.add(northBoard,BorderLayout.NORTH);
 
         JPanel southBoard = new JPanel();
+
         southBoard.setPreferredSize(new Dimension(100,75));
         southBoard.setBackground(Color.pink);
         ImageIcon p2card = new ImageIcon(Deck.deck.get(1).getCARD_FRONT());
@@ -116,9 +116,9 @@ public class Window extends JFrame{
 
         p2Cards = new JLabel();
         p2Cards.setIcon(p2card);
-        p2Cards.getInputMap().put(KeyStroke.getKeyStroke('w'), "moveMan");
-        p2Cards.getActionMap().put("moveMan", moveCard);
         southBoard.add(p2Cards);
+        System.out.println(p2Cards.getWidth());
+        System.out.println(p2Cards.getHeight());
         omniscientBoard.add(southBoard,BorderLayout.SOUTH);
 
         JPanel westBoard = new JPanel();
@@ -195,7 +195,6 @@ public class Window extends JFrame{
             public void mouseEntered(MouseEvent e) {
                 start.setFont(BIGGER);
             }
-
             @Override
             public void mouseExited(MouseEvent e) {
                 start.setFont(SMALLER);
@@ -268,6 +267,7 @@ public class Window extends JFrame{
         //Title in MainMenu------------------------------------------------------------------------------------------------------------------------
         JLabel title = new JLabel("Welcome to Spit!");
         title.setFont(new Font("Comic Sans MS", Font.BOLD, 40));
+        title.setForeground(Color.WHITE);
         title.setHorizontalAlignment(SwingConstants.CENTER);
         startMenu.add(title, BorderLayout.NORTH);
         startMenu.add(centerStartMenu, BorderLayout.CENTER);
