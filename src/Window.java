@@ -11,6 +11,7 @@ public class Window extends JFrame{
     private Font SMALLER = new Font("Comic Sans MS", Font.PLAIN, 30);
     private Action moveCard;
     private JLabel p2Cards;
+    private JLabel p1Cards;
     private Player p1;
     private Player p2;
     String name1, name2;
@@ -81,6 +82,10 @@ public class Window extends JFrame{
                 p1.setName(name1);
                 p2.setName(name2);
                 omniscientLayout.show(omniscient,"game");
+                System.out.println(p1Cards.getWidth());
+                System.out.println(p1Cards.getHeight());
+                System.out.println(p1Cards.getX());
+                System.out.println(p1Cards.getY());
             }
         });
 
@@ -117,8 +122,7 @@ public class Window extends JFrame{
         p2Cards = new JLabel();
         p2Cards.setIcon(p2card);
         southBoard.add(p2Cards);
-        System.out.println(p2Cards.getWidth());
-        System.out.println(p2Cards.getHeight());
+
         omniscientBoard.add(southBoard,BorderLayout.SOUTH);
 
         JPanel westBoard = new JPanel();
@@ -272,6 +276,18 @@ public class Window extends JFrame{
         startMenu.add(title, BorderLayout.NORTH);
         startMenu.add(centerStartMenu, BorderLayout.CENTER);
 
+
+        JButton testing = new JButton("test game");
+        Game testingGame = new Game(p1, p2);
+
+        omniscient.add(testing,"testing");
+        testing.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                omniscientLayout.show(omniscient,"test game");
+            }
+        });
+        start.add(testingGame, BorderLayout.SOUTH);
         //Final additions----------------------------------------------------------------------------------------------------------------------
         omniscient.add(startMenu, "startMenu");
         omniscient.add(helpPage, "helpPage");
