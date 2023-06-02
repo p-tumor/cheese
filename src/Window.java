@@ -277,22 +277,24 @@ public class Window extends JFrame{
         startMenu.add(centerStartMenu, BorderLayout.CENTER);
 
 
-        JButton testing = new JButton("test game");
+        JButton testingButton = new JButton("test game");
         Game testingGame = new Game(p1, p2);
 
-        omniscient.add(testing,"testing");
-        testing.addActionListener(new AbstractAction() {
+        testingButton.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                omniscientLayout.show(omniscient,"test game");
+                omniscientLayout.show(omniscient,"testing");
             }
         });
-        start.add(testingGame, BorderLayout.SOUTH);
+        centerStartMenu.add(testingButton);
+
+
         //Final additions----------------------------------------------------------------------------------------------------------------------
         omniscient.add(startMenu, "startMenu");
         omniscient.add(helpPage, "helpPage");
         omniscient.add(playerCreation, "creation");
         omniscient.add(omniscientBoard, "game");
+        omniscient.add(testingGame,"testing");
         this.add(omniscient);
 
         this.setVisible(true);
