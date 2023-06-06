@@ -1,9 +1,11 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 
-public class Game extends JPanel {
+public class Game extends JPanel implements ActionListener {
     Player p1, p2;
     Card [][] p1Hand;
+    Action move;
     public Game(Player p1, Player p2) {
         p1Hand = new Card[][]{
                 {null},
@@ -21,7 +23,10 @@ public class Game extends JPanel {
                 pile[i] = p1.getCardsAtPlay()[i];
             }
         }
-        System.out.println(p1Hand);
+        move = new move();
+        this.getInputMap().put(KeyStroke.getKeyStroke("SPACE"),"pressed");
+        this.getActionMap().put("pressed", move);
+
     }
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -56,6 +61,20 @@ public class Game extends JPanel {
                  */
                 }
             }
+        }
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+    }
+
+    public class move extends AbstractAction{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Graphics2D graphics2D = (Graphics2D) getGraphics();
+            graphics2D.drawImage(p1Hand[0][0].getCARD_FRONT(), 100, 100, null);
         }
     }
 }
