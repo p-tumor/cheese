@@ -6,7 +6,13 @@ public class Game extends JPanel implements ActionListener {
     Player p1, p2;
     Card [][] p1Hand;
     Action move;
+    Timer timer;
+    int x = 75;
+    int y = 400;
+    int xVelo = 2;
+    int yVelo = 2;
     public Game(Player p1, Player p2) {
+        setFocusable(true);
         p1Hand = new Card[][]{
                 {null},
                 {null,null},
@@ -26,6 +32,8 @@ public class Game extends JPanel implements ActionListener {
         move = new move();
         this.getInputMap().put(KeyStroke.getKeyStroke("SPACE"),"pressed");
         this.getActionMap().put("pressed", move);
+        timer = new Timer(100, this);
+        this.addKeyListener(new KeyHandler());
 
     }
     public void paintComponent(Graphics g) {
@@ -35,7 +43,7 @@ public class Game extends JPanel implements ActionListener {
             for (int i = 0; i < pile.length; i++) {
                 switch (i) {
                     case 0 -> {
-                        g2D.drawImage(pile[i].getCARD_FRONT(), 75, 400, null);
+                        g2D.drawImage(pile[i].getCARD_FRONT(), x, y, null);
                     }
                     case (1) -> {
 
@@ -66,7 +74,9 @@ public class Game extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        x+= xVelo;
+        y-= yVelo;
+        repaint();
     }
 
     public class move extends AbstractAction{
